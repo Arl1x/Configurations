@@ -1,0 +1,5 @@
+# This block is an example for the config file.
+Host <shortcut name>
+	HostName <url or IP>
+	User <username>
+	IdentityFile <path/to/keyfile>
