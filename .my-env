@@ -1,0 +1,16 @@
+# Env Exports
+# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#index-match_002dwords_002dby_002dstyle
+# Define how to match "words"; default mode is "normal" (alphanumerical + WORDCHARS)
+# Default WORDCHARS are *?_-.[]~=/&;!#$%^(){}<>
+export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+
+# Set the default editor for sudoedit or sudo -e
+# Custom by me. I prefer vim.
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+# fzf default find command (can also use ag (silver surfer), rg (ripgrep), etc.)
+export FZF_DEFAULT_COMMAND='find . \! \( -type d -path ./.git -prune \) \! -type d \! -name '\''*.tags'\'' -printf '\''%P\n'\'
+
+# Set the path with additional locations as necessary.
+export PATH="$PATH:/opt/nvim"
