@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/dak3004/.oh-my-zsh"
+  export ZSH="/home/arl1x/.config/zsh/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -64,6 +64,15 @@ DEFAULT_USER=$(whoami)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
+if [ ! -e ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]
+then 
+	echo "Installing zsh-syntax-highlighting."
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+else
+	echo "zsh-syntax-highlighting is already installed."
+fi
+
 plugins=(
   git
   zsh-syntax-highlighting
@@ -100,4 +109,20 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-eval `dircolors /mnt/c/Users/dak3004/Documents/Personal/dircolors-solarized-master/dircolors.256dark`
+eval `dircolors /home/arl1x/dircolors-solarized/dircolors.256dark`
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/arl1x/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/arl1x/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/arl1x/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/arl1x/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
