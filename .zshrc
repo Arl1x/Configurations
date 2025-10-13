@@ -114,7 +114,11 @@ bindkey "^[[B" down-line-or-beginning-search # ARROW_DOWN
 #    then https://github.com/zsh-users/zsh-history-substring-search might be interesting
 
 # Custom by me.
+# Directory colors
 eval `dircolors ~/.config/dircolors-solarized/dircolors.256dark`
+# python uv shell completions
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
 
 # Must go last (see https://github.com/zsh-users/zsh-syntax-highlighting#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
