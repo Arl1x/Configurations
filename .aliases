@@ -1,0 +1,15 @@
+# Aliases
+# Custom by me. Commented out what I don't think I'll use. Also removed lsd for ls -lha
+alias md="mkdir -p"
+alias rd="rmdir"
+alias ......="cd ../../.."
+#alias t="tere --filter-search"
+#alias hib="systemctl hibernate"
+#alias ls="lsd -Al --group-directories-first"
+alias ls="ls -lha --color=auto"
+alias glog="git log --all --decorate --graph --abbrev-commit --format='%C(bold yellow)%h%d%C(reset) - %C(white)%s%C(reset)%n          %C(bold blue)%ar (%ai)%C(reset) %C(bold dim green)%an%C(reset)'"
+alias adog="git log --all --decorate --oneline --graph"
+alias ddc='f() { sudo ddccontrol -r 0x10 -w $1 dev:/dev/i2c-3 };f'
+alias histctx="grep -n '' ~/.histfile | fzf --delimiter : --preview 'bat --style=numbers --color=always --highlight-line {1} ~/.histfile' --preview-window +{1}-/2"
+# Alias sudo so I can use sudo ls alias
+alias sudo="sudo "

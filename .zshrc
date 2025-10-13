@@ -1,128 +1,127 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# The following lines were added by compinstall
 
-# Path to your oh-my-zsh installation.
-  export ZSH="/home/arl1x/.config/zsh/.oh-my-zsh"
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-.]=** r:|=**'
+zstyle ':completion:*' max-errors 2 numeric
+zstyle ':completion:*' menu select=5
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle :compinstall filename '/home/alyssa.zshrc'
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="ys"
-DEFAULT_USER=$(whoami)
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=10000
+setopt autocd
+bindkey -e
+# End of lines configured by zsh-newuser-install
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# Key bindings
+# Print current key bindings: bindkey
+# List available key bindings: bindkey -l
+# Interactively show pressed key when pressing any keys
+bindkey "^[[H" beginning-of-line # HOME
+bindkey "^[[F" end-of-line # END
+bindkey "^[[3~" delete-char # DEL
+bindkey "^[[3;5~" delete-word # CTRL+DEL - delete a whole word after cursor
+bindkey "^H" backward-delete-word # CTRL+BACKSPACE - delete a whole word before cursor
+bindkey "^[[1;5C" forward-word # CTRL+ARROW_RIGHT - move cursor forward one word
+bindkey "^[[1;5D" backward-word # CTRL+ARROW_LEFT - move cursor backward one word
+bindkey "^Z" undo # CTRL+Z
+bindkey "^Y" redo # CTRL+Y
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-
-if [ ! -e ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]
-then 
-	echo "Installing zsh-syntax-highlighting."
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-else
-	echo "zsh-syntax-highlighting is already installed."
+# Aliases
+if [ -f ~/.aliases ]; then
+	. ~/.aliases
 fi
 
-plugins=(
-  git
-  zsh-syntax-highlighting
-)
+# Env Exports
+# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#index-match_002dwords_002dby_002dstyle
+# Define how to match "words"; default mode is "normal" (alphanumerical + WORDCHARS)
+# Default WORDCHARS are *?_-.[]~=/&;!#$%^(){}<>
+export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+# Set the default editor for sudoedit or sudo -e
+# Custom by me. I prefer vim.
+export VISUAL=vim
+export EDITOR="$VISUAL"
+# fzf default find command (can also use ag (silver surfer), rg (ripgrep), etc.)
+export FZF_DEFAULT_COMMAND='find . \! \( -type d -path ./.git -prune \) \! -type d \! -name '\''*.tags'\'' -printf '\''%P\n'\'
 
-source $ZSH/oh-my-zsh.sh
+# https://github.com/mgunyho/tere
+tere() {
+    local result=$(command tere "$@")
+    [ -n "$result" ] && cd -- "$result"
+}
 
-# User configuration
+# If the internal history needs to be trimmed to add the current command line, setting this
+# option will cause the oldest history event that has a duplicate to be lost before losing a
+# unique event from the list. You should be sure to set the value of HISTSIZE to a larger
+# number than SAVEHIST in order to give you some room for the duplicated events, otherwise
+# this option will behave just like HIST_IGNORE_ALL_DUPS once the history fills up with unique
+# events.
+setopt HIST_EXPIRE_DUPS_FIRST
+# When searching for history entries in the line editor, do not display duplicates of a line
+# previously found, even if the duplicates are not contiguous.
+setopt HIST_FIND_NO_DUPS
+# If a new command line being added to the history list duplicates an older one, the older
+# command is removed from the list (even if it is not the previous event).
+setopt HIST_IGNORE_ALL_DUPS
+# Do not enter command lines into the history list if they are duplicates of the previous event.
+setopt HIST_IGNORE_DUPS
+# Remove command lines from the history list when the first character on the line is a space,
+# or when one of the expanded aliases contains a leading space. Only normal aliases (not
+# global or suffix aliases) have this behaviour. Note that the command lingers in the internal
+# history until the next command is entered before it vanishes, allowing you to briefly reuse
+# or edit the line. If you want to make it vanish right away without entering another command,
+# type a space and press return.
+setopt HIST_IGNORE_SPACE
+# When writing out the history file, older commands that duplicate newer ones are omitted.
+setopt HIST_SAVE_NO_DUPS
+# This option works like APPEND_HISTORY except that new history lines are added to the $HISTFILE
+# incrementally (as soon as they are entered), rather than waiting until the shell exits.
+setopt INC_APPEND_HISTORY
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Git status in prompt with the $(gitprompt) expansion
+source /usr/share/zsh/scripts/git-prompt.zsh
+ZSH_THEME_GIT_PROMPT_PREFIX=" ("
+ZSH_THEME_GIT_PROMPT_SUFFIX=")"
+ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[white]%}"
+ZSH_THEME_GIT_PROMPT_TAG="%{$fg_bold[white]%}"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Customizing the prompt
+# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
+# Either show hostname in the prompt "[tom@v330:~]" or not [tom:~]:
+PROMPT='%F{green}[%D{%a %H:%M:%S}] %B%F{magenta}[%n:%f%F{blue}%(4~|../|)%3~%f%b$(gitprompt)%B%F{magenta}]%f%b ' # without hostname
+# PROMPT='%B%F{magenta}[%n@%m:%f%F{blue}%(4~|../|)%3~%f%b$(gitprompt)%B%F{magenta}]%f%b ' # with hostname
+RPROMPT='%B%F{red}%(0?||Exit code: %?)%f%b'
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# CTRL+ARROW_RIGHT   - partially accept suggestion up to the point that the cursor moves to
+# ARROW_RIGHT or END - accept suggestion and replace contents of the command line buffer with the suggestion
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# CTRL+T - paste the selected files and directories onto the command-line
+# CTRL+R - paste the selected command from history onto the command-line
+# ALT+C  - cd into the selected directory
+source /usr/share/fzf/key-bindings.zsh
+# Type ** and hit tab (eg. with the cd command; works with directories, files, process IDs, hostnames, environment variables)
+source /usr/share/fzf/completion.zsh
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# Sift through history for previous commands matching everything up to current cursor position.
+# Moves the cursor to the end of line after each match.
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # ARROW_UP
+bindkey "^[[B" down-line-or-beginning-search # ARROW_DOWN
+# -> This only works for prefixes. If you want to match any substring in the history
+#    then https://github.com/zsh-users/zsh-history-substring-search might be interesting
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+# Custom by me.
+eval `dircolors ~/.config/dircolors-solarized/dircolors.256dark`
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-eval `dircolors /home/arl1x/dircolors-solarized/dircolors.256dark`
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/arl1x/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/arl1x/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/arl1x/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/arl1x/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# Must go last (see https://github.com/zsh-users/zsh-syntax-highlighting#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file)
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
