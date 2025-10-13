@@ -13,4 +13,7 @@ export EDITOR="$VISUAL"
 export FZF_DEFAULT_COMMAND='find . \! \( -type d -path ./.git -prune \) \! -type d \! -name '\''*.tags'\'' -printf '\''%P\n'\'
 
 # Set the path with additional locations as necessary.
+# nvim
 export PATH="$PATH:/opt/nvim"
+# uv
+export PATH="/home/alyssa/.local/bin:$PATH"
